@@ -1,0 +1,14 @@
+{
+  "name": "docker_web_app",
+  "version": "1.0.0",
+  "description": "Node.js on Docker",
+  "author": "Aashrey Sharma <aashrey9sharma@gmail.com>",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.15.3",
+    "mongoose": "^4.11.0"
+  }
+}
