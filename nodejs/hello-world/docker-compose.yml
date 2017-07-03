@@ -1,7 +1,7 @@
 version: "3"
 
 volumes:
-    db_data:
+    dbvolume:
 
 services:
   web:
@@ -9,16 +9,17 @@ services:
     ports:
       - "3000:3000"
     links:
-      - mongo
+      - db
 
-  mongo:
+  db:
     image: mongo
     ports:
       - "27017:27017"
     volumes:
-      - db_data:/data/db
+      - dbvolume:/data/db
+    command: mongod
 
-  mongodata:
+  dbstore:
     image: tianon/true
     volumes:
-      - db_data:/data/db
+      - dbvolume:/data/db
