@@ -25,17 +25,19 @@ console.log('Running on http://' + HOST + ':' + PORT);
 
 function createUserIfNeeded(callback) {
     db.find(USERNAME, function(visitor) {
-        if (visitor == null) {
+        if (!visitor) {
+            console.log("Default visitor not found, creating a new one.");
             db.create(USERNAME, function(visitor) {
                 callback(visitor);
             });
+        } else {
+            callback(visitor);
         }
-        callback(visitor);
+    
     });
 }
 
 function onVisitorFound(req, res, visitor) {
-    console.log(visitor);
     db.getNumVisits(USERNAME, function(num_visits) {
         res.send("Hello world. You've visited this page " + num_visits + ' times.\n');
         db.setNumVisits(USERNAME, num_visits + 1);    

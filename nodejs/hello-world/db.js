@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// mongoose.set('debug', true);
 
 const Visitor = require('./models/visitor.js');
 
@@ -16,7 +17,12 @@ exports.setNumVisits = setNumVisits;
 
 function connect() {
     console.log('Connecting to Mongo');
-    mongoose.connect("mongodb://db:27017");
+    mongoose.connect("mongodb://aashrey:admin123@db:27017/sample");
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+      console.log("Connected to database");
+    });
 }
 
 function create(name, callback) {
@@ -25,13 +31,13 @@ function create(name, callback) {
         visits: 0 
     });
     visitor.save(function(err, visitor, numAffected) {
-        if (err) console.log(err);
+        if (err) console.log("Error while saving \n" + err);
         callback(visitor);
     });
 }
 
 function find(visitor_name, callback) {
-    Visitor.findOne( { name: visitor_name },  function(err, visitor) {
+    Visitor.findOne( { name: visitor_name }, function(err, visitor) {
         if (err) console.log(err);
         callback(visitor);
     });

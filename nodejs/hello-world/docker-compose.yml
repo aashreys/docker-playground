@@ -12,14 +12,21 @@ services:
       - db
 
   db:
-    image: mongo
+    image: aashreys/mongo-auth:latest
+    environment:
+      - AUTH=yes
+      - MONGODB_ADMIN_USER=admin
+      - MONGODB_ADMIN_PASS=admin123
+      - MONGODB_APPLICATION_DATABASE=sample
+      - MONGODB_APPLICATION_USER=aashrey
+      - MONGODB_APPLICATION_PASS=admin123
     ports:
       - "27017:27017"
     volumes:
       - dbvolume:/data/db
-    command: mongod
 
   dbstore:
     image: tianon/true
     volumes:
       - dbvolume:/data/db
+      - ./models:/models
